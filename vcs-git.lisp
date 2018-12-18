@@ -1,4 +1,4 @@
-(uiop/package:define-package :ql-checkout/vcs-git (:use :cl :ql-checkout/config :ql-checkout/vcs))
+(uiop/package:define-package :ql-checkout/vcs-git (:use :cl :ql-checkout/vcs))
 (in-package :ql-checkout/vcs-git)
 ;;;don't edit above
 
@@ -13,19 +13,19 @@
 (defclass kmr-git (git) ())
 
 (defmethod vcs-init ((vcs (eql 'git)) params)
-  (make-instance 'git :uri (first params)))
+  (make-instance vcs :uri (first params)))
 (defmethod vcs-init ((vcs (eql 'branched-git)) params)
-  (make-instance 'branched-git
+  (make-instance vcs
                  :uri (first params)
                  :branch (second params)))
 (defmethod vcs-init ((vcs (eql 'tagged-git)) params)
-  (make-instance 'tagged-git
+  (make-instance vcs
                  :uri (first params)
                  :branch (second params)))
 (defmethod vcs-init ((vcs (eql 'latest-github-release)) params)
-  (make-instance 'latest-github-release :uri (first params)))
+  (make-instance vcs :uri (first params)))
 (defmethod vcs-init ((vcs (eql 'kmr-git)) params)
-  (make-instance 'kmr-git :uri (format nil "http://git.kpe.io/~A.git" (first params))))
+  (make-instance vcs :uri (format nil "http://git.kpe.io/~A.git" (first params))))
 (defmethod vcs-owner ((vcs kmr-git)) "kmr")
 
 (register-vcs 'git)
