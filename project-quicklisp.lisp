@@ -9,8 +9,10 @@
 
 (defmethod find-source ((project quicklisp-projects) name)
   (declare (ignore project))
-  (let ((name (remove #\/ (remove #\. name)))
-        (dir (ensure-projectdata)))
-    (uiop:read-file-line (merge-pathnames (format nil "projects/~A/source.txt" name) dir))))
+  (let* ((name (remove #\/ (remove #\. name)))
+         (dir (ensure-projectdata))
+         (path (merge-pathnames (format nil "projects/~A/source.txt" name) dir)))
+    (when (probe-file path)
+      (uiop:read-file-line path))))
 
 (register-project 'quicklisp-projects)
