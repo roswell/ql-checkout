@@ -9,7 +9,7 @@
 
 (defmethod find-source ((project quicklisp-projects) name)
   (declare (ignore project))
-  (let* ((name (remove #\/ (remove #\. name)))
+  (let* ((name (remove #\/ name))
          (dir (ensure-projectdata))
          (path (merge-pathnames (format nil "projects/~A/source.txt" name) dir)))
     (when (probe-file path)
