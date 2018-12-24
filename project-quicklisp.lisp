@@ -2,12 +2,12 @@
 (in-package :ql-checkout/project-quicklisp)
 ;;;don't edit above
 
-(defclass quicklisp-projects (project) ())
+(defclass quicklisp (project) ())
 
 (defun ensure-projectdata ()
   (clone-github "quicklisp/quicklisp-projects"))
 
-(defmethod find-source ((project quicklisp-projects) name)
+(defmethod find-source ((project quicklisp) name)
   (declare (ignore project))
   (let* ((name (remove #\/ name))
          (dir (ensure-projectdata))
@@ -15,4 +15,7 @@
     (when (probe-file path)
       (uiop:read-file-line path))))
 
-(register-project 'quicklisp-projects)
+(defmethod update ((project quicklisp) &key)
+  (pull-github "quicklisp/quicklisp-projects"))
+
+(register-project 'quicklisp)

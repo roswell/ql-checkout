@@ -2,12 +2,12 @@
 (in-package :ql-checkout/project-ultralisp)
 ;;;don't edit above
 
-(defclass ultralisp-projects (project) ())
+(defclass ultralisp (project) ())
 
 (defun ensure-projectdata ()
   (clone-github "ultralisp/ultralisp-projects"))
 
-(defmethod find-source ((project ultralisp-projects) name)
+(defmethod find-source ((project ultralisp) name)
   (declare (ignore project))
   (let ((name (remove #\/ (remove #\. name)))
         (dir (ensure-projectdata)))
@@ -18,3 +18,8 @@
                   (return-from find-source
                     (format nil "git https://github.com/~A.git" (second exp))))))
             (uiop:read-file-lines (merge-pathnames "projects.txt" dir)))))
+
+(defmethod update ((project ultralisp) &key)
+  (pull-github "ultralisp/ultralisp-projects"))
+
+(register-project 'ultralisp)

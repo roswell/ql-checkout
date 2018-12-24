@@ -1,4 +1,4 @@
-(uiop/package:define-package :ql-checkout/github (:use :cl :ql-checkout/config) (:export :clone-github))
+(uiop/package:define-package :ql-checkout/github (:use :cl :ql-checkout/config) (:export :clone-github :pull-github))
 (in-package :ql-checkout/github)
 ;;;don't edit above
 
@@ -15,5 +15,5 @@
                                   (namestring (ensure-directories-exist dir)))))
     dir))
 
-(defun update-github ()
-  )
+(defun pull-github (owner/name)
+  (format t "tbd pull ~A~%" owner/name))
