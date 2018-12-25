@@ -16,6 +16,7 @@
       (uiop:read-file-line path))))
 
 (defmethod update ((project quicklisp) &key)
+  (format t "update ~A~%" "quicklisp/quicklisp-projects")
   (pull-github "quicklisp/quicklisp-projects"))
 
 (register-project 'quicklisp)

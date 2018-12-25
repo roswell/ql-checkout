@@ -20,6 +20,7 @@
             (uiop:read-file-lines (merge-pathnames "projects.txt" dir)))))
 
 (defmethod update ((project ultralisp) &key)
+  (format t "update ~A~%" "ultralisp/ultralisp-projects")
   (pull-github "ultralisp/ultralisp-projects"))
 
 (register-project 'ultralisp)

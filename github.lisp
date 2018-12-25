@@ -15,5 +15,10 @@
                                   (namestring (ensure-directories-exist dir)))))
     dir))
 
-(defun pull-github (owner/name)
-  (format t "tbd pull ~A~%" owner/name))
+(defun pull-github (owner/name &key (checkoutdir *checkoutdir*))
+  (let ((dir (merge-pathnames (format nil "~A/" owner/name) checkoutdir)))
+    (if (uiop:probe-file* dir)
+        (uiop:run-program (format nil "cd ~A;git pull"
+                                  (namestring dir))
+                          :output :interactive)
+        (format t "pull ~A.directory not exist.Not cloned? ~%" owner/name))))
