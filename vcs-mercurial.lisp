@@ -4,8 +4,8 @@
 
 (defclass mercurial (vcs) ())
 
-(defmethod vcs-init ((vcs (eql 'mercurial)) params)
-  (make-instance vcs :uri (first params)))
+(defmethod vcs-init ((vcs (eql 'mercurial)) params name)
+  (make-instance vcs :uri (first params) :name name))
 (register-vcs 'mercurial)
 
 (defmethod vcs-checkout ((vcs mercurial) directory quiet)

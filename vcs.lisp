@@ -8,20 +8,20 @@
 (defclass vcs ()
   ((uri
     :initarg :uri
-    :accessor vcs-uri)))
+    :accessor vcs-uri)
+   (name
+    :initarg :name
+    :accessor vcs-name)))
 
 (defmethod vcs-checkout (vcs directory quiet)
   (declare (ignore directory quiet))
   (error "not supported vcs for checkout ~S" vcs))
 
-(defmethod vcs-init (symbol params)
+(defmethod vcs-init (symbol params name)
   (error "~S init fail." symbol))
 
 (defmethod vcs-owner (vcs)
   (first (last (pathname-directory (vcs-uri vcs)))))
-
-(defmethod vcs-name (vcs)
-  (pathname-name (vcs-uri vcs)))
 
 (defmethod vcs-dir (vcs base)
   (merge-pathnames
@@ -37,10 +37,10 @@
         do (when (>= (length split) 2)
              (let ((symbol (cdr (assoc (first split) *vcs-init* :test 'string-equal))))
                (if symbol
-                   (let ((result (vcs-init symbol (rest split))))
+                   (let ((result (vcs-init symbol (rest split) name)))
                      (if (typep result 'vcs)
                          (return-from vcs-find result)
-                         (error "something wrong with ~S" split)))
+                         (error "something wrong with ~S ~S~%" result split)))
                    (error (format nil "~A is not supported" (first split))))))))
 
 (defun register-vcs (symbol)

@@ -4,21 +4,10 @@
 
 (defclass svn (vcs) ())
 
-(defmethod vcs-init ((vcs (eql 'svn)) params)
-  (make-instance vcs :uri (first params)))
+(defmethod vcs-init ((vcs (eql 'svn)) params name)
+   (make-instance vcs :uri (first params) :name name))
 (defmethod vcs-owner ((vcs svn)) "svn")
-(defmethod vcs-name ((vcs svn))
-  (let* ((uri (vcs-uri vcs))
-         (name (pathname-name uri)))
-    (if name
-        (if (equal name "trunk")
-            (first (last (pathname-directory uri)))
-            name)
-        (progn 
-          (setf name (first (last (pathname-directory uri))))
-          (if (equal name "trunk")
-              (first (last (pathname-directory uri) 2))
-              name)))))
+
 (register-vcs 'svn)
 
 (defmethod vcs-checkout ((vcs svn) directory quiet)

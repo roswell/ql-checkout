@@ -4,15 +4,9 @@
 
 (defclass darcs (vcs) ())
 
-(defmethod vcs-init ((vcs (eql 'darcs)) params)
-  (make-instance vcs :uri (first params)))
+(defmethod vcs-init ((vcs (eql 'darcs)) params name)
+  (make-instance vcs :uri (first params) :name name))
 (defmethod vcs-owner ((vcs darcs)) "darcs")
-(defmethod vcs-name ((vcs darcs))
-  (let* ((uri (vcs-uri vcs))
-         (name (pathname-name uri)))
-    (if name
-        name
-        (first (last (pathname-directory uri))))))
 (register-vcs 'darcs)
 
 (defmethod vcs-checkout ((vcs darcs) directory quiet)
