@@ -23,4 +23,4 @@
   (format t "update ~A~%" "ultralisp/ultralisp-projects")
   (pull-github "ultralisp/ultralisp-projects"))
 
-(register-project 'ultralisp)
+;;(register-project 'ultralisp)
