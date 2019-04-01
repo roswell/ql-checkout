@@ -10,6 +10,8 @@
 (defmethod find-source ((project quicklisp) name)
   (declare (ignore project))
   (let* ((name (remove #\/ name))
+         #+quicklisp
+         (name (ql-dist:project-name (ql-dist:release (ql-dist:find-system name))))
          (dir (ensure-projectdata))
          (path (merge-pathnames (format nil "projects/~A/source.txt" name) dir)))
     (when (probe-file path)
